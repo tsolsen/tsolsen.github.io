@@ -1,1 +1,1 @@
-# tsolsen.github.io
+# BIMTypeCode.github.io
