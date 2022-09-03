@@ -1,0 +1,10 @@
+body {
+  background-color: #e7f5fe
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
