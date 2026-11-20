@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nature &middot; Gallery</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1><a href="index.html">Gallery</a></h1>
+    <p>Nature &middot; a collection of quiet places.</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="nature.html" class="active">Nature</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="people.html">People</a>
+    <a href="travel.html">Travel</a>
+  </nav>
+
+  <!--
+    Gallery page: 3 per row, any number of rows. Add more tiles to grow it.
+    Each tile needs a unique id for the click-to-enlarge (lightbox) state.
+    Real photos: replace each placeholder span with e.g.
+    <img class="item-img" src="images/nature-01.jpg" alt="Green Slope" />
+  -->
+  <main class="grid">
+
+    <figure class="item" id="ph1">
+      <span class="ph p4" aria-hidden="true"></span>
+      <a class="backdrop" href="nature.html" aria-label="Close"></a>
+      <figcaption class="cap">Green Slope</figcaption>
+      <a class="close" href="nature.html">&#10005;</a>
+    </figure>
+
+    <figure class="item" id="ph2">
+      <span class="ph p6" aria-hidden="true"></span>
+      <a class="backdrop" href="nature.html" aria-label="Close"></a>
+      <figcaption class="cap">Forest Walk</figcaption>
+      <a class="close" href="nature.html">&#10005;</a>
+    </figure>
+
+    <figure class="item" id="ph3">
+      <span class="ph p11" aria-hidden="true"></span>
+      <a class="backdrop" href="nature.html" aria-label="Close"></a>
+      <figcaption class="cap">Meadow Edge</figcaption>
+      <a class="close" href="nature.html">&#10005;</a>
+    </figure>
+
+    <figure class="item" id="ph4">
+      <span class="ph p3" aria-hidden="true"></span>
+      <a class="backdrop" href="nature.html" aria-label="Close"></a>
+      <figcaption class="cap">Still Water</figcaption>
+      <a class="close" href="nature.html">&#10005;</a>
+    </figure>
+
+    <figure class="item" id="ph5">
+      <span class="ph p1" aria-hidden="true"></span>
+      <a class="backdrop" href="nature.html" aria-label="Close"></a>
+      <figcaption class="cap">Fog Line</figcaption>
+      <a class="close" href="nature.html">&#10005;</a>
+    </figure>
+
+    <figure class="item" id="ph6">
+      <span class="ph p7" aria-hidden="true"></span>
+      <a class="backdrop" href="nature.html" aria-label="Close"></a>
+      <figcaption class="cap">Birch Stand</figcaption>
+      <a class="close" href="nature.html">&#10005;</a>
+    </figure>
+
+    <figure class="item" id="ph7">
+      <span class="ph p9" aria-hidden="true"></span>
+      <a class="backdrop" href="nature.html" aria-label="Close"></a>
+      <figcaption class="cap">Late Field</figcaption>
+      <a class="close" href="nature.html">&#10005;</a>
+    </figure>
+
+    <figure class="item" id="ph8">
+      <span class="ph p2" aria-hidden="true"></span>
+      <a class="backdrop" href="nature.html" aria-label="Close"></a>
+      <figcaption class="cap">Dune Grass</figcaption>
+      <a class="close" href="nature.html">&#10005;</a>
+    </figure>
+
+    <figure class="item" id="ph9">
+      <span class="ph p8" aria-hidden="true"></span>
+      <a class="backdrop" href="nature.html" aria-label="Close"></a>
+      <figcaption class="cap">North Shore</figcaption>
+      <a class="close" href="nature.html">&#10005;</a>
+    </figure>
+
+  </main>
+
+  <footer>
+    &copy; 2026 &middot; Built with plain HTML and CSS.
+  </footer>
+
+</body>
+</html>
