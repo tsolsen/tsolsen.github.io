@@ -1,15 +1,101 @@
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-  <title>soender.com</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gallery</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-  <div class="center">
-    <p>Hello visitor.</p>
-  </div>
-</body>
 
+  <!-- Filter state -->
+  <input class="filter-radio" type="radio" name="filter" id="f-all" checked />
+  <input class="filter-radio" type="radio" name="filter" id="f-nature" />
+  <input class="filter-radio" type="radio" name="filter" id="f-arch" />
+  <input class="filter-radio" type="radio" name="filter" id="f-people" />
+  <input class="filter-radio" type="radio" name="filter" id="f-travel" />
+
+  <header>
+    <h1>Gallery</h1>
+    <p>A small collection of quiet places and moments. Click any photo to view it large.</p>
+  </header>
+
+  <nav>
+    <label for="f-all">All</label>
+    <label for="f-nature">Nature</label>
+    <label for="f-arch">Architecture</label>
+    <label for="f-people">People</label>
+    <label for="f-travel">Travel</label>
+  </nav>
+
+  <main class="grid" id="gallery">
+    <figure class="item travel" id="ph1">
+      <div class="ph p1"></div>
+      <a class="backdrop" href="#gallery" aria-label="Close"></a>
+      <figcaption>Fjord Morning &middot; Travel</figcaption>
+      <a class="close" href="#gallery">&#10005;</a>
+    </figure>
+
+    <figure class="item nature" id="ph2">
+      <div class="ph p4"></div>
+      <a class="backdrop" href="#gallery" aria-label="Close"></a>
+      <figcaption>Green Slope &middot; Nature</figcaption>
+      <a class="close" href="#gallery">&#10005;</a>
+    </figure>
+
+    <figure class="item arch" id="ph3">
+      <div class="ph p3"></div>
+      <a class="backdrop" href="#gallery" aria-label="Close"></a>
+      <figcaption>Concrete Study &middot; Architecture</figcaption>
+      <a class="close" href="#gallery">&#10005;</a>
+    </figure>
+
+    <figure class="item nature" id="ph4">
+      <div class="ph p6"></div>
+      <a class="backdrop" href="#gallery" aria-label="Close"></a>
+      <figcaption>Forest Walk &middot; Nature</figcaption>
+      <a class="close" href="#gallery">&#10005;</a>
+    </figure>
+
+    <figure class="item people" id="ph5">
+      <div class="ph p5"></div>
+      <a class="backdrop" href="#gallery" aria-label="Close"></a>
+      <figcaption>Portrait in Warm Light &middot; People</figcaption>
+      <a class="close" href="#gallery">&#10005;</a>
+    </figure>
+
+    <figure class="item arch" id="ph6">
+      <div class="ph p8"></div>
+      <a class="backdrop" href="#gallery" aria-label="Close"></a>
+      <figcaption>Glass Facade &middot; Architecture</figcaption>
+      <a class="close" href="#gallery">&#10005;</a>
+    </figure>
+
+    <figure class="item travel" id="ph7">
+      <div class="ph p9"></div>
+      <a class="backdrop" href="#gallery" aria-label="Close"></a>
+      <figcaption>Desert Road &middot; Travel</figcaption>
+      <a class="close" href="#gallery">&#10005;</a>
+    </figure>
+
+    <figure class="item people" id="ph8">
+      <div class="ph p7"></div>
+      <a class="backdrop" href="#gallery" aria-label="Close"></a>
+      <figcaption>Street Figure &middot; People</figcaption>
+      <a class="close" href="#gallery">&#10005;</a>
+    </figure>
+
+    <figure class="item travel" id="ph9">
+      <div class="ph p2"></div>
+      <a class="backdrop" href="#gallery" aria-label="Close"></a>
+      <figcaption>Old Town Steps &middot; Travel</figcaption>
+      <a class="close" href="#gallery">&#10005;</a>
+    </figure>
+  </main>
+
+  <footer>
+    &copy; 2026 &middot; Troels Sønder Olsen.
+  </footer>
+
+</body>
 </html>
