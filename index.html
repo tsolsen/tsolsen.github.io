@@ -1,355 +1,71 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Gallery</title>
-<link rel="stylesheet" href="styles.css" />
-<style>
-  :root {
-    --ink: #1a1a1a;
-    --muted: #8a8a8a;
-    --line: #e6e6e6;
-    --bg: #ffffff;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* Hidden filter radios (pure-CSS category filtering) */
-  .filter-radio {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  /* ---------- Header ---------- */
-  header {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 72px 24px 0;
-  }
-
-  header h1 {
-    font-size: 28px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
-
-  header p {
-    margin-top: 8px;
-    font-size: 14px;
-    color: var(--muted);
-  }
-
-  /* ---------- Category nav ---------- */
-  nav {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 24px 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 28px;
-  }
-
-  nav label {
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    cursor: pointer;
-    padding-bottom: 6px;
-    border-bottom: 1px solid transparent;
-    transition: color 0.2s ease, border-color 0.2s ease;
-    user-select: none;
-  }
-
-  nav label:hover { color: var(--ink); }
-
-  /* ---------- Grid: 3 equal columns, uniform 1:1 (5x5) tiles ---------- */
-  .grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 32px 24px 96px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 2px;
-    display: block;
-    aspect-ratio: 1 / 1; /* square cell: holds 4:5 and 5:4 crops via object-fit */
-    cursor: pointer;
-  }
-
-  /* Ready for real photos: 4:5 or 5:4 crops shown whole (letterboxed) */
-  .item {
-    background: #f2f1ef; /* matches page tone behind letterboxed edges */
-  }
-
-  .item img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.4s ease;
-  }
-
-  /* Placeholder "photos": layered gradients, each unique */
-  .ph {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    transition: transform 0.4s ease;
-  }
-
-  .item:hover .ph { transform: scale(1.03); }
-
-  .p1  { background: linear-gradient(135deg, #dfe7ee 0%, #b8c6d4 45%, #8fa3b8 100%); }
-  .p2  { background: linear-gradient(160deg, #f2ede4 0%, #d9c9ad 60%, #b39b73 100%); }
-  .p3  { background: linear-gradient(180deg, #e8ecef 0%, #c3cdd4 55%, #6f7d87 100%); }
-  .p4  { background: linear-gradient(45deg, #dce8de 0%, #a9c4ae 55%, #799882 100%); }
-  .p5  { background: linear-gradient(120deg, #ece4e0 0%, #d3b8ae 50%, #b08a7d 100%); }
-  .p6  { background: linear-gradient(200deg, #e5e9e2 0%, #b7c2ab 55%, #8a9678 100%); }
-  .p7  { background: linear-gradient(15deg, #eee9ee 0%, #cfc2d2 55%, #a28ba6 100%); }
-  .p8  { background: linear-gradient(75deg, #e2e9ee 0%, #b5c8d6 50%, #85a0b4 100%); }
-  .p9  { background: linear-gradient(105deg, #f0e8dd 0%, #dcc4a4 55%, #bfa176 100%); }
-
-  /* Subtle texture overlay for a photographic feel */
-  .ph::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(120% 90% at 30% 20%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 55%),
-      radial-gradient(100% 100% at 80% 90%, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 60%);
-  }
-
-  .item figcaption {
-    position: absolute;
-    left: 16px;
-    bottom: 14px;
-    z-index: 2;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #ffffff;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
-  }
-
-  .item:hover figcaption {
-    opacity: 0.9;
-    transform: translateY(0);
-  }
-
-  /* ---------- Lightbox: pure-CSS :target ---------- */
-  .backdrop, .close { display: none; }
-
-  .item:target {
-    position: fixed;
-    inset: 0;
-    z-index: 40;
-    overflow: visible;
-    display: block !important; /* overrides the category filter's display:none */
-    background: rgba(250, 250, 250, 0.97);
-    cursor: default;
-  }
-
-  .item:target .backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    cursor: zoom-out;
-  }
-
-  .item:target .ph,
-  .item:target img {
-    inset: 6vh 9vw;
-    width: auto;
-    height: auto;
-    object-fit: cover;
-    transform: none;
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
-  }
-
-  .item:target figcaption {
-    left: calc(9vw + 20px);
-    bottom: calc(6vh + 20px);
-    opacity: 0.9;
-    transform: none;
-    color: #ffffff;
-  }
-
-  .item:target .close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 20px;
-    right: 24px;
-    z-index: 3;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    font-size: 16px;
-    line-height: 1;
-    color: var(--muted);
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.2s ease, background 0.2s ease;
-  }
-
-  .item:target .close:hover {
-    color: var(--ink);
-    background: rgba(0, 0, 0, 0.05);
-  }
-
-  /* ---------- Filtering (radio:checked selectors) ---------- */
-
-  /* Hide everything, then reveal the checked category (or all) */
-  #f-nature:checked  ~ * .item { display: none; }
-  #f-arch:checked    ~ * .item { display: none; }
-  #f-people:checked  ~ * .item { display: none; }
-  #f-travel:checked  ~ * .item { display: none; }
-
-  #f-all:checked    ~ * .item  { display: block; }
-  #f-nature:checked ~ main .nature { display: block; }
-  #f-arch:checked   ~ main .arch   { display: block; }
-  #f-people:checked ~ main .people { display: block; }
-  #f-travel:checked ~ main .travel { display: block; }
-
-  /* Active tab styling: label follows its input */
-  #f-all:checked    ~ nav label[for="f-all"],
-  #f-nature:checked ~ nav label[for="f-nature"],
-  #f-arch:checked   ~ nav label[for="f-arch"],
-  #f-people:checked ~ nav label[for="f-people"],
-  #f-travel:checked ~ nav label[for="f-travel"] {
-    color: var(--ink);
-    border-color: var(--ink);
-  }
-
-  /* Footer */
-  footer {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px 64px;
-    border-top: 1px solid var(--line);
-    padding-top: 16px;
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  /* ---------- Responsive ---------- */
-  @media (max-width: 900px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 560px) {
-    header { padding-top: 56px; }
-    .grid { grid-template-columns: 1fr; padding-bottom: 72px; }
-    .item:target .ph { inset: 4vh 6vw; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Filter state -->
-  <input class="filter-radio" type="radio" name="filter" id="f-all" checked />
-  <input class="filter-radio" type="radio" name="filter" id="f-nature" />
-  <input class="filter-radio" type="radio" name="filter" id="f-arch" />
-  <input class="filter-radio" type="radio" name="filter" id="f-people" />
-  <input class="filter-radio" type="radio" name="filter" id="f-travel" />
-
   <header>
     <h1>Gallery</h1>
-    <p>A small collection of quiet places and moments. Click any photo to view it large.</p>
+    <p>A small collection of quiet places and moments. Selected works from each collection below.</p>
   </header>
 
   <nav>
-    <label for="f-all">All</label>
-    <label for="f-nature">Nature</label>
-    <label for="f-arch">Architecture</label>
-    <label for="f-people">People</label>
-    <label for="f-travel">Travel</label>
+    <a href="index.html" class="active">Home</a>
+    <a href="nature.html">Nature</a>
+    <a href="architecture.html">Architecture</a>
+    <a href="people.html">People</a>
+    <a href="travel.html">Travel</a>
   </nav>
 
-  <main class="grid" id="gallery">
-    <figure class="item travel" id="ph1">
-      <div class="ph p1"></div>
-      <a class="backdrop" href="#gallery" aria-label="Close"></a>
-      <figcaption>Fjord Morning &middot; Travel</figcaption>
-      <a class="close" href="#gallery">&#10005;</a>
-    </figure>
+  <!--
+    Front page: 6 tiles, 2 rows of 3 at desktop.
+    Tiles deep-link into their collection page; arriving with the #id hash
+    opens that photo enlarged. To feature different photos, change the
+    href targets or swap tiles between pages.
 
-    <figure class="item nature" id="ph2">
-      <div class="ph p4"></div>
-      <a class="backdrop" href="#gallery" aria-label="Close"></a>
-      <figcaption>Green Slope &middot; Nature</figcaption>
-      <a class="close" href="#gallery">&#10005;</a>
-    </figure>
+    Note: plain HTML/CSS cannot randomize tiles per visit. This is a fixed
+    featured selection. For true per-visit randomization you would need a
+    tiny script or server-side templating.
 
-    <figure class="item arch" id="ph3">
-      <div class="ph p3"></div>
-      <a class="backdrop" href="#gallery" aria-label="Close"></a>
-      <figcaption>Concrete Study &middot; Architecture</figcaption>
-      <a class="close" href="#gallery">&#10005;</a>
-    </figure>
+    Real photos: replace each placeholder span with e.g.
+    <img class="item-img" src="images/nature-01.jpg" alt="Forest Walk" />
+  -->
+  <main class="grid">
 
-    <figure class="item nature" id="ph4">
-      <div class="ph p6"></div>
-      <a class="backdrop" href="#gallery" aria-label="Close"></a>
-      <figcaption>Forest Walk &middot; Nature</figcaption>
-      <a class="close" href="#gallery">&#10005;</a>
-    </figure>
+    <a class="item" href="travel.html#ph1">
+      <span class="ph p1" aria-hidden="true"></span>
+      <span class="cap">Fjord Morning &middot; Travel</span>
+    </a>
 
-    <figure class="item people" id="ph5">
-      <div class="ph p5"></div>
-      <a class="backdrop" href="#gallery" aria-label="Close"></a>
-      <figcaption>Portrait in Warm Light &middot; People</figcaption>
-      <a class="close" href="#gallery">&#10005;</a>
-    </figure>
+    <a class="item" href="nature.html#ph2">
+      <span class="ph p6" aria-hidden="true"></span>
+      <span class="cap">Forest Walk &middot; Nature</span>
+    </a>
 
-    <figure class="item arch" id="ph6">
-      <div class="ph p8"></div>
-      <a class="backdrop" href="#gallery" aria-label="Close"></a>
-      <figcaption>Glass Facade &middot; Architecture</figcaption>
-      <a class="close" href="#gallery">&#10005;</a>
-    </figure>
+    <a class="item" href="architecture.html#ph3">
+      <span class="ph p8" aria-hidden="true"></span>
+      <span class="cap">Glass Facade &middot; Architecture</span>
+    </a>
 
-    <figure class="item travel" id="ph7">
-      <div class="ph p9"></div>
-      <a class="backdrop" href="#gallery" aria-label="Close"></a>
-      <figcaption>Desert Road &middot; Travel</figcaption>
-      <a class="close" href="#gallery">&#10005;</a>
-    </figure>
+    <a class="item" href="people.html#ph4">
+      <span class="ph p7" aria-hidden="true"></span>
+      <span class="cap">Street Figure &middot; People</span>
+    </a>
 
-    <figure class="item people" id="ph8">
-      <div class="ph p7"></div>
-      <a class="backdrop" href="#gallery" aria-label="Close"></a>
-      <figcaption>Street Figure &middot; People</figcaption>
-      <a class="close" href="#gallery">&#10005;</a>
-    </figure>
+    <a class="item" href="travel.html#ph5">
+      <span class="ph p9" aria-hidden="true"></span>
+      <span class="cap">Desert Road &middot; Travel</span>
+    </a>
 
-    <figure class="item travel" id="ph9">
-      <div class="ph p2"></div>
-      <a class="backdrop" href="#gallery" aria-label="Close"></a>
-      <figcaption>Old Town Steps &middot; Travel</figcaption>
-      <a class="close" href="#gallery">&#10005;</a>
-    </figure>
+    <a class="item" href="people.html#ph5">
+      <span class="ph p5" aria-hidden="true"></span>
+      <span class="cap">Portrait in Warm Light &middot; People</span>
+    </a>
+
   </main>
 
   <footer>
